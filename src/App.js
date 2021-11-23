@@ -1,23 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import { Switch, useLocation } from 'react-router-dom';
+import Signup from './containers/Signup';
+import Singin from './containers/Signin';
+import Admin from './containers/Admin';
+import Viewchecklist from "./containers/Viewchecklist";
+import Publicroute from "./containers/Routing/Publicroute";
+import Privateroute from "./containers/Routing/Privateroute";
 
 function App() {
+  const location = useLocation();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Switch>
+        <Publicroute path="/" exact component={Singin} />
+        <Publicroute path="/Signup" exact component={Signup} />
+        <Privateroute path="/Admin" exact component={Admin} />
+        <Privateroute path={`/view/${location.pathname.split("/")[location.pathname.split("/").length - 1]}`} exact component={Viewchecklist} />
+      </Switch>
     </div>
   );
 }
